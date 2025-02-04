@@ -1,6 +1,6 @@
 const registrationModel = require("../database/userRegistrationData")
 const jwt = require("jsonwebtoken")
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 require("dotenv").config()
 const userRegistration = async (req, res) => {
     const { username, name, contact, password, email, role } = req.body

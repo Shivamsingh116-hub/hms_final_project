@@ -1,6 +1,6 @@
 const patientAppointmentModel = require("../database/patientAppointmentData")
 const registrationModel = require("../database/userRegistrationData")
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const updateTreatment = async (req, res) => {
     try {
         const checkTreatmentExist = await registrationModel.findOne({ username: req.params.username })

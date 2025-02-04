@@ -3,7 +3,6 @@ const { userRegistration, verifyUser, userProtected } = require("../controller/u
 const authenticationToken = require("../middlwares/authMiddleware")
 const get_doctor_data = require("../controller/getDoctorData")
 const { addPatientAppointmentData, getPatientAppointmentData, deleteAppointmentData } = require("../controller/patientAppointmentdata")
-const app = express()
 const router = express.Router()
 router.post("/registration_data", userRegistration)
 router.post("/signin_data", verifyUser)
