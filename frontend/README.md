@@ -1,1 +1,8 @@
-To access and explore this project, you can visit the live version by clicking on the following link: [Project Link](https://comforting-fudge-ce9470.netlify.app/). If you prefer to run the project locally, clone the repository, install the necessary dependencies, and start the development server. Once the server is running, open your browser and navigate to http://localhost:3000 (or the specified port) to interact with the application.
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
