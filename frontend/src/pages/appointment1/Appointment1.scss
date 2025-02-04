@@ -111,7 +111,7 @@ $primary-font: "Montserrat", sans-serf;
     }
 
     .appointment-show {
-        margin-top: 250px;
+        margin-top: 300px;
         display: flex;
         flex-direction: column;
         gap: 25px;
@@ -141,10 +141,15 @@ $primary-font: "Montserrat", sans-serf;
                 margin-top: 10px;
                 align-items: center;
                 gap: 10px;
+
                 p {
                     padding: 10px 20px;
                 }
             }
+        }
+
+        @media (max-width:600px) {
+            margin-top: 600px;
         }
     }
 }
