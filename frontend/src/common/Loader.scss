@@ -1,0 +1,31 @@
+.loading-component {
+    position: fixed;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    background-color: rgba($color: #f0f0f0, $alpha: 0.3);
+
+    div {
+        background-color: transparent;
+        border: 6px solid #ccc;
+        border-top: 6px solid #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-top: 40vh;
+        animation: spin 1s linear infinite;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

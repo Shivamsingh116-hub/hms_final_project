@@ -1,0 +1,17 @@
+const express = require("express")
+const dbConnection = require("./database/dbConnection")
+const CORS = require('cors')
+const userRouter = require("./routes/userRoutes")
+const doctorRouter = require("./routes/doctorRoutes")
+const app = express()
+app.use(express.json())
+require("dotenv").config()
+app.use(CORS())
+app.use(userRouter)
+app.use(doctorRouter)
+app.get('/', (req, res) => {
+    res.send("WORKING")
+})
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on ${process.env.PORT}`)
+})
