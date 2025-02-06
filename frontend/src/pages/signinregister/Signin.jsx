@@ -6,16 +6,18 @@ import axios from 'axios'
 
 
 import { Context } from '../../common/Context'
+import Loader from '../../common/Loader'
 const apiUrl = import.meta.env.VITE_API_URL
 const Signin = () => {
     const navigate = useNavigate()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const { setCurrentUser, setSigninButton } = useContext(Context)
+    const { setCurrentUser, setSigninButton, loading, setLoading } = useContext(Context)
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         const data = { username: username, password: password }
         try {
+            setLoading(true)
             const response = await axios.post(`${apiUrl}/signin_data`, data)
             if (response.data.Token) {
                 setSigninButton(true)
@@ -33,6 +35,8 @@ const Signin = () => {
             }
         } catch (e) {
             console.log(e)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -51,6 +55,7 @@ const Signin = () => {
                 <button type="submit">Signin</button>
                 <p>New user? <Link to='/register' className='register-link'>Register here</Link></p>
             </form>
+            {loading && <Loader />}
         </div>
     )
 }
