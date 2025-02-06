@@ -3,13 +3,16 @@ import './Billing.scss'
 import image from './pngtree-image-of-futuristic-medical-hospital-room-picture-image_2736851.jpg'
 import axios from 'axios'
 import { Context } from '../../common/Context'
+import Loader from '../../common/Loader'
 const pythonApiUrl = import.meta.env.VITE_PYTHON_URL
 const Billing = () => {
-  const { currentUser } = useContext(Context)
+  const { currentUser, loading, setLoading } = useContext(Context)
   const [billArr, setBillArr] = useState([])
   const [billDataArr, setBillDataArr] = useState([])
   const username = currentUser.username
+
   const fetchBilling = async () => {
+    setLoading(true)
     try {
       const response = await axios.get(`${pythonApiUrl}/billingdata/get_billing_data?username=${username}`)
       if (response.data.billingData) {
@@ -17,6 +20,8 @@ const Billing = () => {
       }
     } catch (e) {
       console.log(e)
+    } finally {
+      setLoading(false)
     }
   }
   useEffect(() => {
@@ -55,6 +60,7 @@ const Billing = () => {
           </section>
         })) : <p>No bills</p>}
       </div>
+      {loading ? <Loader /> : <p style={{ display: "none" }}>jdf</p>}
     </div>
   )
 }
