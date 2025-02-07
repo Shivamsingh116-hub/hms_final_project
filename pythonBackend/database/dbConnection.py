@@ -1,4 +1,5 @@
 import mysql.connector
+from flask import jsonify
 from mysql.connector import Error
 import os
 from dotenv import load_dotenv

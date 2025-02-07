@@ -23,23 +23,26 @@ def findMedicine(search_medicine):
 
 @add_bill.route('/add_bill_data',methods=["POST"])
 def addBillData():
-    data=request.get_json()
-    name=data["name"]
-    username=data["username"]
-    pharmacistShop=data["pharmacistShop"]
-    dumpArr=json.dumps(data["billArr"])
-    totalBill=data["totalBill"]
-    connection=db_Connection()
-    if not connection or isinstance(connection, str):  # Check if connection is valid
-        return jsonify({"message": "Database connection failed"}), 500
-    cursor=connection.cursor()
-    query="INSERT INTO billing_data (name,username,billArr,totalBill,pharmacistShop) VALUES (%s,%s,%s,%s,%s)"
-    try:
+    try:    
+        data=request.get_json()
+        name=data["name"]
+        username=data["username"]
+        pharmacistShop=data["pharmacistShop"]
+        dumpArr=json.dumps(data["billArr"])
+        totalBill=data["totalBill"]
+        connection=db_Connection()
+        if not connection or isinstance(connection, str):
+            print("❌ Database connection is invalid!")
+            return jsonify({"message": "No database selected"}), 500
+        
+        cursor = connection.cursor()
+
+        query="INSERT INTO billing_data (name,username,billArr,totalBill,pharmacistShop) VALUES (%s,%s,%s,%s,%s)"
         cursor.execute(query,(name,username,dumpArr,totalBill,pharmacistShop))
         connection.commit()
         return jsonify({"message":"Bill added succesfully"})
     except Exception as e:
-        return jsonify({"message":e})
+        return jsonify({"message":str(e)})
     finally:
         cursor.close()
         connection.close()
