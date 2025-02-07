@@ -17,4 +17,4 @@ def db_Connection():
             return connection
     except Error as e:
         print("Mysql not connected")
-        return f"Database not connected {e}"
+        return None

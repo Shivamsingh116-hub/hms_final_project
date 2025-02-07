@@ -31,7 +31,7 @@ def addBillData():
         dumpArr=json.dumps(data["billArr"])
         totalBill=data["totalBill"]
         connection=db_Connection()
-        if not connection or isinstance(connection, str):
+        if not connection:
             print("❌ Database connection is invalid!")
             return jsonify({"message": "No database selected"}), 500
         
@@ -44,5 +44,7 @@ def addBillData():
     except Exception as e:
         return jsonify({"message":str(e)})
     finally:
-        cursor.close()
-        connection.close()
+        if 'cursor' in locals() and cursor:
+            cursor.close()
+        if 'connection' in locals() and connection:
+            connection.close()
