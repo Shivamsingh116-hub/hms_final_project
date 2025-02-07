@@ -30,6 +30,8 @@ def addBillData():
     dumpArr=json.dumps(data["billArr"])
     totalBill=data["totalBill"]
     connection=db_Connection()
+    if not connection or isinstance(connection, str):  # Check if connection is valid
+        return jsonify({"message": "Database connection failed"}), 500
     cursor=connection.cursor()
     query="INSERT INTO billing_data (name,username,billArr,totalBill,pharmacistShop) VALUES (%s,%s,%s,%s,%s)"
     try:
@@ -40,4 +42,4 @@ def addBillData():
         return jsonify({"message":e})
     finally:
         cursor.close()
-        connection.close
+        connection.close()

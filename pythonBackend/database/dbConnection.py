@@ -7,9 +7,9 @@ def db_Connection():
     try:
         connection=mysql.connector.connect(
             host=os.getenv("DB_HOST","localhost"),
-            user=os.getenv("DB_USER","root"),
-            password=os.getenv("DB_PASSWORD","luck@999239"),
-            database=os.getenv("DB_NAME","hospital_data")
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            database=os.getenv("DB_NAME")
         )
         if connection.is_connected():
             print("Mysql connected")
