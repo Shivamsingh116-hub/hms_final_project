@@ -5,3 +5,5 @@ router.post("/add_billing_data",addBillingData)
 router.get('/get_billing_data',getBillingData)
 const pharmacistRoute=router
 module.exports=pharmacistRoute
+
+// finally
