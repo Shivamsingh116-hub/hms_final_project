@@ -1,7 +1,5 @@
 from flask import Blueprint,jsonify,request
 import pandas as pd
-import json
-from database.dbConnection import db_Connection
 medicine_data=Blueprint('medicine_data',__name__)
 add_bill=Blueprint("add_bill",__name__)
 data=pd.read_csv('./database/A_Z_medicines_dataset_of_India.csv')
@@ -21,30 +19,3 @@ def findMedicine(search_medicine):
     dictionary=data[data["name"].str.lower().str.contains(search_medicine,na=False)].head(10).to_dict(orient="records")
     return dictionary
 
-@add_bill.route('/add_bill_data',methods=["POST"])
-def addBillData():
-    try:    
-        data=request.get_json()
-        name=data["name"]
-        username=data["username"]
-        pharmacistShop=data["pharmacistShop"]
-        dumpArr=json.dumps(data["billArr"])
-        totalBill=data["totalBill"]
-        connection=db_Connection()
-        if not connection:
-            print("❌ Database connection is invalid!")
-            return jsonify({"message": "No database selected"}), 500
-        
-        cursor = connection.cursor()
-
-        query="INSERT INTO billing_data (name,username,billArr,totalBill,pharmacistShop) VALUES (%s,%s,%s,%s,%s)"
-        cursor.execute(query,(name,username,dumpArr,totalBill,pharmacistShop))
-        connection.commit()
-        return jsonify({"message":"Bill added succesfully"})
-    except Exception as e:
-        return jsonify({"message":str(e)})
-    finally:
-        if 'cursor' in locals() and cursor:
-            cursor.close()
-        if 'connection' in locals() and connection:
-            connection.close()

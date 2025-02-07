@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 // import imgIcon from './1600w-oz1ox2GedbU.jpg'
 import { data, Link, useNavigate } from 'react-router-dom'
 const apiUrl = import.meta.env.VITE_API_URL
 import './Register.scss'
 import axios from 'axios'
+import { Context } from '../../common/Context'
+import Loader from '../../common/Loader'
 const Register = () => {
     const navigate = useNavigate()
     const [username, setUsername] = useState('')
@@ -11,11 +13,13 @@ const Register = () => {
     const [password, setPassword] = useState('')
     const [contact, setContact] = useState('')
     const [email, setEmail] = useState('')
-    const [role,setRole]=useState('User')
+    const [role, setRole] = useState('User')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const { loading, setLoading } = useContext(Context)
     const handleSubmit = async (e) => {
+        setLoading(true)
         e.preventDefault()
-        const data = { username: username, contact: contact, name: name, password: password, email: email,role:role }
+        const data = { username: username, contact: contact, name: name, password: password, email: email, role: role }
         try {
             const response = await axios.post(`${apiUrl}/registration_data`, data)
             if (response.data.message) {
@@ -29,6 +33,8 @@ const Register = () => {
 
         } catch (e) {
             console.log(e)
+        } finally {
+            setLoading(false)
         }
     }
     return (
@@ -58,7 +64,7 @@ const Register = () => {
                     <label>Confirm Password</label>
                     <input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password" placeholder='Enter password again...' />
                 </div>
-                <select value={role} required onChange={(e)=>setRole(e.target.value)}>
+                <select value={role} required onChange={(e) => setRole(e.target.value)}>
                     <option value='Register as' disabled>Register as</option>
                     <option>User</option>
                     <option>Doctor</option>
@@ -67,6 +73,7 @@ const Register = () => {
                 <button type="submit">Register</button>
                 <p>If already registerd? <Link to='/signin' className='register-link'>Signin</Link></p>
             </form>
+            {loading ? <Loader /> : <p style={{ display: "none" }}>no</p>}
         </div>
     )
 }

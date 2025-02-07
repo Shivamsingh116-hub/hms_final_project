@@ -35,7 +35,7 @@ const Billing2 = () => {
     const handleBillSubmit = async () => {
         const data = { username: username, billArr: billArr, name: name, totalBill: totalBill,pharmacistShop:pharmacistUsername }
         try {
-            const response = await axios.post(`${pythonApiUrl}/billing2data/add_bill_data`, data)
+            const response = await axios.post(`${apiurl}/add_billing_data`, data)
             console.log(response)
             if (response.data.message) {
                 alert(response.data.message)

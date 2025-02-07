@@ -4,7 +4,7 @@ import image from './pngtree-image-of-futuristic-medical-hospital-room-picture-i
 import axios from 'axios'
 import { Context } from '../../common/Context'
 import Loader from '../../common/Loader'
-const pythonApiUrl = import.meta.env.VITE_PYTHON_URL
+const apiurl = import.meta.env.VITE_API_URL
 const Billing = () => {
   const { currentUser, loading, setLoading } = useContext(Context)
   const [billArr, setBillArr] = useState([])
@@ -14,7 +14,7 @@ const Billing = () => {
   const fetchBilling = async () => {
     setLoading(true)
     try {
-      const response = await axios.get(`${pythonApiUrl}/billingdata/get_billing_data?username=${username}`)
+      const response = await axios.get(`${apiurl}/get_billing_data?username=${username}`)
       if (response.data.billingData) {
         setBillDataArr(response.data.billingData)
       }
