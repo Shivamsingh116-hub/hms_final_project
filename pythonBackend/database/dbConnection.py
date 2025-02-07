@@ -10,11 +10,15 @@ def db_Connection():
             host=os.getenv("DB_HOST","localhost"),
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
-            database=os.getenv("DB_NAME")
+            database=os.getenv("DB_NAME"),
+            port=int(os.getenv("DB_PORT",3306)),
         )
         if connection.is_connected():
             print("Mysql connected")
             return connection
-    except Error as e:
-        print("Mysql not connected")
+    except Error as err:
+        print("❌ MySQL Connection Failed!")
+        print("Error Code:", err.errno)
+        print("SQLSTATE:", err.sqlstate)
+        print("Message:", err.msg)
         return None
