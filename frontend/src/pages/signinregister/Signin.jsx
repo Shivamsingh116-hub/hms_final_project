@@ -35,6 +35,7 @@ const Signin = () => {
             }
         } catch (e) {
             console.log(e)
+            alert(e.message)
         } finally {
             setLoading(false)
         }

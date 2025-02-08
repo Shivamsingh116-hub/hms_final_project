@@ -147,7 +147,7 @@ const Appointment1 = () => {
               <p>Message: {appointmentData.message}</p>
               <p>Appointment Date: {appointmentData.appointmentDate}</p>
               <div className='status'>
-                {appointmentData.status === 'pending' ? (<p style={{ backgroundColor: "#ffc107" }}>Pending</p>) : appointmentData.status === 'Accept' ? (<p style={{ color: "white", backgroundColor: "#28a745" }}>Accept</p>) : (<p style={{ color: "white", backgroundColor: "#c82333" }}>Reject</p>)}
+                {appointmentData.status === 'pending' ? (<p style={{ color: "#ffc107" }}>Pending</p>) : appointmentData.status === 'Accept' ? (<p style={{ color: "#28a745" }}>Accept</p>) : (<p style={{  color: "#c82333" }}>Reject</p>)}
                 <DeleteIcon style={{ color: "#dc3545" }} onClick={() => {
                   handleDelete(appointmentData._id)
                 }} />

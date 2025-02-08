@@ -36,6 +36,10 @@ const Billing = () => {
           if (typeof parsedData !== "object") {
             parsedData = JSON.parse(parsedData)
           }
+          const timeStamp = billData.createdAt
+          const date = new Date(timeStamp)
+          const billDate = date.toISOString().split('T')[0]
+          const billTime = date.toTimeString().split('T')[0].replace("GM", "")
           return <section key={`billdata${index}`}>
             <h2>Name: {billData.name}</h2>
             <ul>
@@ -57,6 +61,10 @@ const Billing = () => {
               })}
             </ul>
             <span>Total Bill: <p>{billData.totalBill}</p></span>
+            <div className='bill-date-section'>
+              <p>{billTime}</p>
+              <p>{billDate}</p>
+            </div>
           </section>
         })) : <p>No bills</p>}
       </div>

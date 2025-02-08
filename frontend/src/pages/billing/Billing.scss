@@ -97,6 +97,22 @@ $primary-font: "Montserrat", sans-serif;
                 }
             }
 
+            .bill-date-section {
+                color: green;
+                font-weight: 500;
+                font-size: 13px;
+                display: flex;
+                justify-content: flex-end;
+                width: 100%;
+                gap: 10px;
+
+                @media (max-width:800px) {
+                    flex-direction: column;
+                    align-items: flex-end;
+                    gap: 0px;
+                }
+            }
+
             @media (max-width:800px) {
                 padding: 20px 20px;
             }

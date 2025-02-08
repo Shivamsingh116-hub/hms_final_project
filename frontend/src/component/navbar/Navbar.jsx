@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import imgIcon from './1600w-oz1ox2GedbU.jpg'
 import { Link, useNavigate } from 'react-router-dom'
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -8,6 +8,8 @@ import './Navbar.scss'
 const Navbar = () => {
     const [menuClassname, setMenuClassname] = useState('passive')
     const navigate = useNavigate()
+    const [isOpen, setIsOpen] = useState(false)
+    const containerRef = useRef(null)
     const { signinButton, currentUser, setSigninButton } = useContext(Context)
     const role = currentUser.role
     const user = [{ path: "/", navItem: "Home" },
@@ -29,6 +31,9 @@ const Navbar = () => {
     }
     useEffect(() => {
         setMenuClassname('passive')
+        if(localStorage.getItem('token')){
+            setSigninButton(true)
+        }
     }, [location.pathname])
     const handleMenuBtn = () => {
         if (menuClassname === 'passive') {
@@ -37,16 +42,27 @@ const Navbar = () => {
             setMenuClassname('passive')
         }
     }
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (containerRef.current && !containerRef.current.contains(event.target)){
+                setMenuClassname('passive')
+            }
+        }
+        document.addEventListener("mousedown",handleClickOutside)
+        return ()=>{
+            document.removeEventListener("mousedown",handleClickOutside)
+        }
+    },[])
     return (
         <nav>
             <img src={imgIcon} alt='icon' />
             {currentUser && signinButton ? (
-                <ul className={menuClassname}>
+                <ul ref={containerRef} className={menuClassname}>
                     {matchLogin[role].map((item, index) => {
                         return <li key={`userSign${index}`}><Link to={item.path} className='link-item'>{item.navItem}</Link></li>
                     })}
                 </ul>
-            ) : (<ul className={menuClassname}>
+            ) : (<ul ref={containerRef} className={menuClassname}>
                 {withoutLoginNavbar.map((item, index) => {
                     return <li key={`nosign${index}`}><Link to={item.path} className='link-item'>{item.navItem}</Link></li>
                 })}
