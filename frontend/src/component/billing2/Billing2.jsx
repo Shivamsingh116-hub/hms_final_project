@@ -33,7 +33,7 @@ const Billing2 = () => {
         setMedicineName('')
     }
     const handleBillSubmit = async () => {
-        const data = { username: username, billArr: billArr, name: name, totalBill: totalBill,pharmacistShop:pharmacistUsername }
+        const data = { username: username, billArr: billArr, name: name, totalBill: totalBill, pharmacistShop: pharmacistUsername }
         try {
             const response = await axios.post(`${apiurl}/add_billing_data`, data)
             console.log(response)
@@ -54,6 +54,9 @@ const Billing2 = () => {
         const sum = billArr.reduce((acc, medicine) => acc + medicine.price, 0);
         setTotalBill(sum);
     }, [billArr])
+
+
+    // waste
     return (
         <div className='billing2-component'>
             <img src={image} alt='img' />
