@@ -11,4 +11,4 @@ app.register_blueprint(medicine_data,url_prefix='/billing2data')
 def hello():
     return jsonify({"message":"hello"})
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=os.getenv("PORT"))
