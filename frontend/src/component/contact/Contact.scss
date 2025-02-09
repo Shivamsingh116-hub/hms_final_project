@@ -1,0 +1,38 @@
+$primary-font: "Montserrat", sans-serif;
+
+#contact-component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20px;
+    gap: 15px;
+
+    #select-doctor-contact {
+        display: flex;
+        box-sizing: border-box;
+        flex-direction: column;
+        font-family: $primary-font;
+        box-shadow: 0px 0px 10px rgba($color: #000000, $alpha: 0.3);
+        padding: 20px 20px;
+        gap: 10px;
+        align-items: center;
+        border-radius: 5px;
+
+        h3 {
+            font-weight: 500;
+        }
+
+        input {
+            padding: 5px 10px;
+            font-family: $primary-font;
+        }
+    }
+
+    #chat-container {
+        box-shadow: 0px 0px 10px rgba($color: #000000, $alpha: 0.3);
+        padding: 30px 30px;
+        width: 80%;
+        font-family: $primary-font;
+    }
+}

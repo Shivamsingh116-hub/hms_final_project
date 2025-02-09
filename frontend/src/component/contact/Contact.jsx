@@ -1,46 +1,34 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { io } from "socket.io-client";
+import SendIcon from '@mui/icons-material/Send';
+import './Contact.scss'
 import { Context } from '../../common/Context';
 const socket = io("http://localhost:3000")
 const Contact = () => {
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
   const [senderNumber, setSenderNumber] = useState('')
+  const [registerNumber, setRegisterNumber] = useState('')
   const { currentUser } = useContext(Context)
   const contact = currentUser.contact
-  useEffect(() => {
-    socket.on('receiveMessage', (msg) => {
-      setMessages((prevMsg) => [...prevMsg, `Other: ${msg}`])
-    })
-    socket.on("error", (err) => {
-      alert(err);
-    });
-    return () => {
-      socket.off('receiveMessage')
-    }
-  }, [])
   const sendMessage = () => {
-    socket.emit('register', contact)
-    socket.emit('sendMessage', { to: senderNumber, message })
-    setMessages((prevMsg) => [...prevMsg, `Me: ${message}`])
-    setMessage('')
+    console.log("njk")
   }
-
   return (
-    <div>
-      <h2>Chat</h2>
-      <ul>
-        {
-          messages && messages.map((msg) => {
-            return <li>{msg}</li>
-          })
-        }
-      </ul>
-      <div>
-        <label>Send to </label>
-        <input type='number' value={senderNumber} onChange={(e) => setSenderNumber(e.target.value)} placeholder='Enter number her ' />
-        <input value={message} onChange={(e) => setMessage(e.target.value)} id='message' placeholder='enter message' />
-        <button onClick={sendMessage}>Send</button>
+    <div id='contact-component'>
+      <div id='select-doctor-contact'>
+        <h3>Select Doctor</h3>
+        <input placeholder='Select doctor...' />
+      </div>
+      <div id='chat-container'>
+        <h3>Shivam Singh</h3>
+        <div>
+          Message display
+        </div>
+        <div>
+          <input placeholder='Enter text here...' />
+          <button><SendIcon /></button>
+        </div>
       </div>
     </div>
   )

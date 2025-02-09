@@ -10,7 +10,7 @@ const Billing = () => {
   const [billArr, setBillArr] = useState([])
   const [billDataArr, setBillDataArr] = useState([])
   const username = currentUser.username
-
+  const [billId, setBillId] = useState('')
   const fetchBilling = async () => {
     setLoading(true)
     try {
@@ -27,10 +27,29 @@ const Billing = () => {
   useEffect(() => {
     fetchBilling()
   }, [currentUser])
+  const addBill = async () => {
+    try {
+      const response = await axios.put(`${apiurl}/add_bill_to_username/${billId}`, { username: username })
+      if (response.data.message) {
+        alert(response.data.message)
+      }
+      if (response.data.is_add) {
+        fetchBilling()
+      }
+    } catch (e) {
+      console.log(e)
+    }
+    setBillId('')
+  }
   return (
     <div className='billing-component'>
       <img style={{ width: "100%", height: "70%" }} src={image} alt='img' />
+
       <div className='billing-show'>
+        <div id='add-bill-using-id'>
+          <input value={billId} onChange={(e) => setBillId(e.target.value)} placeholder='Enter bill id...' />
+          <button onClick={addBill}>Add</button>
+        </div>
         {billDataArr.length > 0 ? (billDataArr.map((billData, index) => {
           let parsedData = billData.billArr
           if (typeof parsedData !== "object") {

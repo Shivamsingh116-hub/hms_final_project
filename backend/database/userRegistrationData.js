@@ -19,12 +19,15 @@ const registrationSchema = new mongoose.Schema({
     }, role: {
         type: String,
         required: true
-    },treatment:{
-        type:[String],
-        required:function(){
-            return this.role==='Doctor'
+    }, treatment: {
+        type: [String],
+        required: function () {
+            return this.role === 'Doctor'
         },
-        default:[]
+        default: []
+    },
+    socketId: {
+        typr: String
     }
 })
 const registrationModel = mongoose.model("userRegistrationData", registrationSchema)

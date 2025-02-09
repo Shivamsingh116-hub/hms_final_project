@@ -3,6 +3,7 @@ const { userRegistration, verifyUser, userProtected } = require("../controller/u
 const authenticationToken = require("../middlwares/authMiddleware")
 const get_doctor_data = require("../controller/getDoctorData")
 const { addPatientAppointmentData, getPatientAppointmentData, deleteAppointmentData } = require("../controller/patientAppointmentdata")
+const { updateBillUsernameUser } = require("../controller/billingData")
 const router = express.Router()
 router.post("/registration_data", userRegistration)
 router.post("/signin_data", verifyUser)
@@ -11,5 +12,6 @@ router.get('/get_doctor_data',get_doctor_data)
 router.post('/add_patient_appointment',addPatientAppointmentData)
 router.get('/get_patient_appointment_data',getPatientAppointmentData)
 router.delete('/delete_appointment_data/:id',deleteAppointmentData)
+router.put('/add_bill_to_username/:billId',updateBillUsernameUser)
 const userRouter=router
 module.exports=userRouter

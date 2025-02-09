@@ -15,6 +15,7 @@ const Billing2 = () => {
     const [totalBill, setTotalBill] = useState(0)
     const { currentUser } = useContext(Context)
     const pharmacistUsername = currentUser.username
+    const [recentBill, setRecentBill] = useState('')
     const handleChange = async (medicineSearch) => {
         try {
             const response = await axios.get(`${pythonApiUrl}/billing2data/search_medicine?medicineSearch=${medicineSearch}`)
@@ -37,7 +38,10 @@ const Billing2 = () => {
         try {
             const response = await axios.post(`${apiurl}/add_billing_data`, data)
             console.log(response)
-            if (response.data.message) {
+            if (response.data.bill) {
+                setRecentBill(response.data.bill)
+            }
+            else if (response.data.message) {
                 alert(response.data.message)
             }
         }
@@ -117,6 +121,11 @@ const Billing2 = () => {
                 <span>Total bill: <p>{totalBill}</p></span>
                 <button onClick={handleBillSubmit}>Add Bill</button>
             </div>
+            {recentBill && <div className='biil-id-show'>
+                <h3>{recentBill.name}</h3>
+                <span>Bill Id: <p>{recentBill._id}</p></span>
+                <span>Total Bill: <p>{recentBill.totalBill}</p></span>
+            </div>}
         </div>
     )
 }
