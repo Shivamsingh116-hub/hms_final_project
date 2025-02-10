@@ -3,7 +3,6 @@ import { io } from "socket.io-client";
 import SendIcon from '@mui/icons-material/Send';
 import './Contact.scss'
 import { Context } from '../../common/Context';
-const socket = io("http://localhost:3000")
 const Contact = () => {
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
