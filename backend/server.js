@@ -13,7 +13,11 @@ const server = http.createServer(app)
 app.use(express.json())
 require("dotenv").config()
 app.use(CORS(
-    {origin:[process.env.FONTEND_URL,process.env.LOCALHOST_URL]}
+    {
+        origin: [process.env.FRONTEND_URL, process.env.LOCALHOST_URL],
+        methods: ["GET", "PUT", "POST", "DELETE"],
+        credentials:true
+    }
 ))
 app.use(userRouter)
 app.use(doctorRouter)
