@@ -11,14 +11,14 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
     const containerRef = useRef(null)
     const { signinButton, currentUser, setSigninButton } = useContext(Context)
-    const[tokenSearch,setSearchToken]=useState(false)
+    const [tokenSearch, setSearchToken] = useState(false)
     const role = currentUser.role
     const user = [{ path: "/", navItem: "Home" },
     { path: "/appointment1", navItem: "Appointment" }, { path: "/billing", navItem: "Billing" }, { path: "/about", navItem: "About" }, { path: "/doctor", navItem: "Doctor" }, { path: "/contact", navItem: "Contact" },]
     const doctor = [{ path: "/", navItem: "Home" },
     { path: "/appointment2", navItem: "Appointment" }, { path: "/completeProfile", navItem: "Profile" }, { path: "/about", navItem: "About" }, { path: "/contact", navItem: "Contact" },]
     const pharmacist = [{ path: "/", navItem: "Home" }, { path: "/billing2", navItem: "Billing" }, { path: "/contact", navItem: "Contact" }]
-    const withoutLoginNavbar = [{ path: "/", navItem: "Home" }, { path: "/about", navItem: "About" }, { path: "/contact", navItem: "Contact" },]
+    const withoutLoginNavbar = [{ path: "/", navItem: "Home" }, { path: "/about", navItem: "About" }]
     const matchLogin = { User: user, Doctor: doctor, Pharmacist: pharmacist }
 
     const handleSignin = () => {
@@ -54,7 +54,7 @@ const Navbar = () => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside)
         }
-    
+
     }, [])
 
     return (
