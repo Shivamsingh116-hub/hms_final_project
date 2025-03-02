@@ -15,14 +15,20 @@ import Doctor from './component/doctor/Doctor'
 import DoctorProfile from './pages/completeProfile/doctorProfile'
 import About from './pages/about/About'
 import Billing2 from './component/billing2/Billing2'
+import axios from 'axios'
 const apiUrl = import.meta.env.VITE_API_URL
 const App = () => {
 
-  useEffect(async () => {
-    fetch(`${apiUrl}/wakeup/ping`)
-      .then(res => console.log("Backend Waking Up"))
-      .catch(err => console.error("Error waking backend:", err));
+  useEffect( () => {
+    const wapkeup=async()=>{
+      const response=await axios.get(`${apiUrl}/wakeup/ping`)
+      if(response){
+        console.log("wakeup")
+      }
+    }
+    wapkeup()
   }, [])
+
   return (
     <BrowserRouter>
       <Navbar />
