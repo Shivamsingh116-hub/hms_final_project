@@ -5,12 +5,14 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import DeleteIcon from '@mui/icons-material/Delete';
 import Loader from '../../common/Loader'
+import Modal from '../../Modal'
 const apiUrl = import.meta.env.VITE_API_URL
 const Appointment2 = () => {
-  const { chooseDoctor, currentUser, loading, setLoading } = useContext(Context)
+  const {popupModal,setPopupModal, chooseDoctor, currentUser, loading, setLoading } = useContext(Context)
   const [patientAppointmentData, setPatientAppointmentData] = useState([])
   const username = currentUser.username
   const [status, setStatus] = useState('')
+  const [message, setMessage] = useState('')
   const fetchData = async () => {
     setLoading(true)
     try {
@@ -43,8 +45,9 @@ const Appointment2 = () => {
   const handleSubmit = async (appointmentId) => {
     try {
       const response = await axios.put(`${apiUrl}/update_appointment_status/${appointmentId}`, { status: status })
-      if(response.data.message){
-        alert(response.data.message)
+      if (response.data.message) {
+        setPopupModal(true)
+        setMessage(response.data.message)
       }
     } catch (e) {
       console.log(e)
@@ -79,6 +82,8 @@ const Appointment2 = () => {
         ) : <p>No appointment submit..</p>}
       </div>
       {loading ? <Loader /> : <p style={{ display: "none" }}>dgs</p>}
+      {popupModal && <Modal message={message} onClose={() => setPopupModal(false)} duration={3000} />}
+
     </div>
   )
 }

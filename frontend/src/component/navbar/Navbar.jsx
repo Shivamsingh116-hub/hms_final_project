@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import imgIcon from './1600w-oz1ox2GedbU.jpg'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Context } from '../../common/Context'
 import MenuIcon from '@mui/icons-material/Menu';
@@ -20,10 +20,10 @@ const Navbar = () => {
     const pharmacist = [{ path: "/", navItem: "Home" }, { path: "/billing2", navItem: "Billing" }, { path: "/contact", navItem: "Contact" }]
     const withoutLoginNavbar = [{ path: "/", navItem: "Home" }, { path: "/about", navItem: "About" }]
     const matchLogin = { User: user, Doctor: doctor, Pharmacist: pharmacist }
-
+    const location = useLocation()
     const handleSignin = () => {
         if (signinButton) {
-            localStorage.setItem("token", '')
+            localStorage.remove("token")
             navigate('/')
             setSigninButton(false)
         } else {
@@ -38,11 +38,7 @@ const Navbar = () => {
         }
     }, [location.pathname])
     const handleMenuBtn = () => {
-        if (menuClassname === 'passive') {
-            setMenuClassname('active')
-        } else {
-            setMenuClassname('passive')
-        }
+        setMenuClassname((prev) => (prev === 'passive' ? 'active' : 'passive'));
     }
     useEffect(() => {
         function handleClickOutside(event) {

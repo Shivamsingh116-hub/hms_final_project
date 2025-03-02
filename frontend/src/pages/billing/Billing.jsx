@@ -4,13 +4,15 @@ import image from './pngtree-image-of-futuristic-medical-hospital-room-picture-i
 import axios from 'axios'
 import { Context } from '../../common/Context'
 import Loader from '../../common/Loader'
+import Modal from '../../Modal'
 const apiurl = import.meta.env.VITE_API_URL
 const Billing = () => {
-  const { currentUser, loading, setLoading } = useContext(Context)
+  const {popupModal,setPopupModal, currentUser, loading, setLoading } = useContext(Context)
   const [billArr, setBillArr] = useState([])
   const [billDataArr, setBillDataArr] = useState([])
   const username = currentUser.username
   const [billId, setBillId] = useState('')
+  const [message, setMessage] = useState('')
   const fetchBilling = async () => {
     setLoading(true)
     try {
@@ -31,7 +33,8 @@ const Billing = () => {
     try {
       const response = await axios.put(`${apiurl}/add_bill_to_username/${billId}`, { username: username })
       if (response.data.message) {
-        alert(response.data.message)
+        setPopupModal(true)
+        setMessage(response.data.message)
       }
       if (response.data.is_add) {
         fetchBilling()
@@ -88,6 +91,8 @@ const Billing = () => {
         })) : <p>No bills</p>}
       </div>
       {loading ? <Loader /> : <p style={{ display: "none" }}>jdf</p>}
+      {popupModal && <Modal message={message} onClose={() => setPopupModal(false)} duration={3000} />}
+
     </div>
   )
 }

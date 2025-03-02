@@ -3,16 +3,14 @@ import './Contact.scss'
 import { Context } from '../../common/Context';
 import axios from 'axios';
 import Loader from '../../common/Loader';
+import Modal from '../../Modal';
 const apiUrl = import.meta.env.VITE_API_URL
 const Contact = () => {
   const [message, setMessage] = useState('')
-  const [messages, setMessages] = useState([])
-  const [senderNumber, setSenderNumber] = useState('')
-  const [registerNumber, setRegisterNumber] = useState('')
   const [isquery, setIsquery] = useState(1)
   const [feedback, setFeedback] = useState('')
   const [query, setquery] = useState('')
-  const { currentUser, loading, setLoading } = useContext(Context)
+  const { popupModal, setPopupModal, currentUser, loading, setLoading } = useContext(Context)
   const [feedbackArray, setFeedbackArray] = useState([])
   const username = currentUser.username
   const name = currentUser.name
@@ -24,10 +22,12 @@ const Contact = () => {
     try {
       if (isquery === 1) {
         const response = await axios.post(`${apiUrl}/add_query`, { query: query, username: username, name: name })
-        alert(response.data.message)
+        setMessage(response.data.message)
+        setPopupModal(true)
       } else {
         const response = await axios.post(`${apiUrl}/add_feedback`, { feedback: feedback, username: username, name: name })
-        alert(response.data.message)
+        setMessage(response.data.message)
+        setPopupModal(true)
       }
     } catch (e) {
       console.log(e)
@@ -93,6 +93,7 @@ const Contact = () => {
         })) : <div><p>No feedback</p></div>}
       </div>
       {loading ? <Loader /> : <p style={{ display: "none" }}>hdchgc</p>}
+      {popupModal && <Modal message={message} onClose={() => setPopupModal(false)} duration={3000} />}
     </div>
   )
 }

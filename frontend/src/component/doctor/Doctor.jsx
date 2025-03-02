@@ -7,10 +7,10 @@ import { Context } from '../../common/Context'
 import Loader from '../../common/Loader'
 const apiUrl = import.meta.env.VITE_API_URL
 const Doctor = () => {
-  const { signinButton, setChooseDoctor, doctorsData, setDoctorsData } = useContext(Context)
+  const { currentUser, loading, setLoading, signinButton, setChooseDoctor, doctorsData, setDoctorsData } = useContext(Context)
   const navigate = useNavigate()
-  const location = useLocation()
   const fetcyhData = async () => {
+    setLoading(true)
     try {
       const response = await axios.get(`${apiUrl}/get_doctor_data`)
       if (response.data.doctorsData) {
@@ -18,13 +18,15 @@ const Doctor = () => {
       }
     } catch (e) {
       console.log(e)
+    } finally {
+      setLoading(false)
     }
   }
 
   useEffect(() => {
 
     fetcyhData()
-  }, [location.pathname])
+  }, [currentUser])
   return (
     <div className='doctors-profile-show-component'>
 
@@ -54,6 +56,7 @@ const Doctor = () => {
           }}>Book Appointment</button>
         </section>
       })) : <p>No doctors register here...</p>}
+      {loading && <Loader />}
     </div>
   )
 }

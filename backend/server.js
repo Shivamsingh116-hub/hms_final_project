@@ -22,6 +22,9 @@ app.use(CORS(
 app.use(userRouter)
 app.use(doctorRouter)
 app.use(pharmacistRoute)
+app.get('/wakeup/ping',(req,res)=>{
+    res.send("Wake up")
+})
 app.get('/', (req, res) => {
     res.send("WORKING")
 })

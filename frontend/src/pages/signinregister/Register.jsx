@@ -6,6 +6,7 @@ import './Register.scss'
 import axios from 'axios'
 import { Context } from '../../common/Context'
 import Loader from '../../common/Loader'
+import Modal from '../../Modal'
 const Register = () => {
     const navigate = useNavigate()
     const [username, setUsername] = useState('')
@@ -14,8 +15,9 @@ const Register = () => {
     const [contact, setContact] = useState('')
     const [email, setEmail] = useState('')
     const [role, setRole] = useState('User')
+    const [message, setMessage] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const { loading, setLoading } = useContext(Context)
+    const { popupModal, setPopupModal, loading, setLoading } = useContext(Context)
     const handleSubmit = async (e) => {
         setLoading(true)
         e.preventDefault()
@@ -23,9 +25,11 @@ const Register = () => {
         try {
             const response = await axios.post(`${apiUrl}/registration_data`, data)
             if (response.data.message) {
-                alert(response.data.message)
+                setPopupModal(true)
+                setMessage(response.data.message)
             } else if (response.data.err) {
-                alert(response.data.err)
+                setPopupModal(true)
+                setMessage(response.data.message)
             }
             if (response.data.is_signin) {
                 navigate('/signin')
@@ -74,6 +78,7 @@ const Register = () => {
                 <p>If already registerd? <Link to='/signin' className='register-link'>Signin</Link></p>
             </form>
             {loading ? <Loader /> : <p style={{ display: "none" }}>no</p>}
+            {popupModal && <Modal message={message} onClose={() => setPopupModal(false)} duration={3000} />}
         </div>
     )
 }

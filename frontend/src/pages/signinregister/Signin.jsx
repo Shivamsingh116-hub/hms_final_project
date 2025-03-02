@@ -3,16 +3,16 @@ import imgIcon from './1600w-oz1ox2GedbU.jpg'
 import './Signin.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-
-
 import { Context } from '../../common/Context'
 import Loader from '../../common/Loader'
+import Modal from '../../Modal'
 const apiUrl = import.meta.env.VITE_API_URL
 const Signin = () => {
     const navigate = useNavigate()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const { setCurrentUser, setSigninButton, loading, setLoading } = useContext(Context)
+    const [message, setMessage] = useState('')
+    const { popupModal, setPopupModal, setCurrentUser, setSigninButton, loading, setLoading } = useContext(Context)
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         const data = { username: username, password: password }
@@ -31,7 +31,8 @@ const Signin = () => {
                     console.log(e)
                 }
             } else if (response.data.message) {
-                alert(response.data.message)
+                setPopupModal(true)
+                setMessage(response.data.message)
             }
         } catch (e) {
             console.log(e)
@@ -57,6 +58,7 @@ const Signin = () => {
                 <p>New user? <Link to='/register' className='register-link'>Register here</Link></p>
             </form>
             {loading && <Loader />}
+            {popupModal && <Modal message={message} onClose={() => setPopupModal(false)} duration={3000} />}
         </div>
     )
 }

@@ -1,0 +1,27 @@
+.notification {
+    position: fixed;
+    bottom: 80px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+
+    p {
+        padding: 10px 15px;
+        box-shadow: 0px 0px 10px rgba($color: #000000, $alpha: 0.3);
+        border-radius: 5px;
+        background-color: #E3F2FD;
+        /* Light Blue */
+        color: #007BFF;
+        box-sizing: border-box;
+        width: fit-content;
+        font-family: "Montserrat", sans-serif;
+
+        @media (max-width:500px) {
+            padding: 5px 10px;
+            font-size: 14px;
+            text-align: center;
+            width: 80%;
+        }
+    }
+}

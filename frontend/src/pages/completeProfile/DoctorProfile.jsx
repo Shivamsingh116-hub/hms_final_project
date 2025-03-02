@@ -5,12 +5,14 @@ import axios from 'axios'
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 const apiUrl = import.meta.env.VITE_API_URL
 import "./DoctorProfile.scss"
+import Modal from '../../Modal';
 const DoctorProfile = () => {
-    const { currentUser, loading, setLoading } = useContext(Context)
+    const {popupModal,setPopupModal, currentUser, loading, setLoading } = useContext(Context)
     const [treatmentName, setTreatmentName] = useState('')
     const [treatmentArr, setTreatmentArr] = useState([])
     const [doctorProfileData, setDoctorProfileData] = useState()
     const username = currentUser.username
+    const [message, setMessage] = useState('')
     const [doctorNumber, setDoctorNumber] = useState('')
     const [doctorEmail, setDoctorEmail] = useState('')
     const [matchPassword, setMatchPassword] = useState('')
@@ -37,7 +39,8 @@ const DoctorProfile = () => {
         try {
             const response = await axios.put(`${apiUrl}/update_treatment_array/${username}`, { treatmentName: treatmentName })
             setTreatmentArr(response.data.treatmentArray)
-            alert(response.data.message)
+            setPopupModal(true)
+            setMessage(response.data.message)
         }
         catch (e) {
             console.log(e)
@@ -62,7 +65,8 @@ const DoctorProfile = () => {
         try {
             const response = await axios.put(`${apiUrl}/update_doctor_profile/${username}`, data)
             if (response.data.message) {
-                alert(response.data.message)
+                setPopupModal(true)
+                setMessage(response.data.message)
             }
         } catch (e) {
             console.log(e)
@@ -99,6 +103,7 @@ const DoctorProfile = () => {
                 </div>
                 <button type='submit'>Update</button>
             </form>
+            {popupModal && <Modal message={message} onClose={() => setPopupModal(false)} duration={3000} />}
 
         </div>
     )

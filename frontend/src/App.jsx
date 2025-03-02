@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from './component/home/Home'
 import Navbar from './component/navbar/Navbar'
@@ -15,7 +15,14 @@ import Doctor from './component/doctor/Doctor'
 import DoctorProfile from './pages/completeProfile/doctorProfile'
 import About from './pages/about/About'
 import Billing2 from './component/billing2/Billing2'
+const apiUrl = import.meta.env.VITE_API_URL
 const App = () => {
+
+  useEffect(async () => {
+    fetch(`${apiUrl}/wakeup/ping`)
+      .then(res => console.log("Backend Waking Up"))
+      .catch(err => console.error("Error waking backend:", err));
+  }, [])
   return (
     <BrowserRouter>
       <Navbar />
@@ -32,8 +39,8 @@ const App = () => {
         <Route path='/doctor' element={<Doctor />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/billing' element={<Billing />} />
-        <Route path='/completeProfile' element={<DoctorProfile/>}/>
-        <Route path='/billing2' element={<Billing2/>}/>
+        <Route path='/completeProfile' element={<DoctorProfile />} />
+        <Route path='/billing2' element={<Billing2 />} />
       </Routes>
     </BrowserRouter>
   )

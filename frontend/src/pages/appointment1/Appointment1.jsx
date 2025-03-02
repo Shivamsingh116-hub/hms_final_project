@@ -6,9 +6,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import DeleteIcon from '@mui/icons-material/Delete';
 import Loader from '../../common/Loader'
+import Modal from '../../Modal'
 const apiUrl = import.meta.env.VITE_API_URL
 const Appointment1 = () => {
-  const { chooseDoctor, currentUser, loading, setLoading } = useContext(Context)
+  const {popupModal,setPopupModal, chooseDoctor, currentUser, loading, setLoading } = useContext(Context)
   const doctorName = chooseDoctor.doctorName
   const [patientName, setPatientName] = useState(currentUser.name)
   const patientDoctorUsername = chooseDoctor.doctorUsername
@@ -20,6 +21,7 @@ const Appointment1 = () => {
   const [patientTreatment, setPatientTreatment] = useState('')
   const [patientAppointmentData, setPatientAppointmentData] = useState([])
   const [status, setStatus] = useState('pending')
+  const [message, setMessage] = useState('')
   const navigate = useNavigate()
   const fetchData = async () => {
     try {
@@ -52,7 +54,8 @@ const Appointment1 = () => {
     try {
       const response = await axios.post(`${apiUrl}/add_patient_appointment`, data)
       if (!response.data.is_add) {
-        alert(response.data.message)
+        setPopupModal(true)
+        setMessage(response.data.message)
       }
     } catch (e) {
       console.log(e)
@@ -147,7 +150,7 @@ const Appointment1 = () => {
               <p>Message: {appointmentData.message}</p>
               <p>Appointment Date: {appointmentData.appointmentDate}</p>
               <div className='status'>
-                {appointmentData.status === 'pending' ? (<p style={{ color: "#ffc107" }}>Pending</p>) : appointmentData.status === 'Accept' ? (<p style={{ color: "#28a745" }}>Accept</p>) : (<p style={{  color: "#c82333" }}>Reject</p>)}
+                {appointmentData.status === 'pending' ? (<p style={{ color: "#ffc107" }}>Pending</p>) : appointmentData.status === 'Accept' ? (<p style={{ color: "#28a745" }}>Accept</p>) : (<p style={{ color: "#c82333" }}>Reject</p>)}
                 <DeleteIcon style={{ color: "#dc3545" }} onClick={() => {
                   handleDelete(appointmentData._id)
                 }} />
@@ -157,6 +160,8 @@ const Appointment1 = () => {
         ) : <p>No appointment submit..</p>}
       </div>
       {loading ? <Loader /> : <p style={{ display: "none" }}>dgs</p>}
+      {popupModal && <Modal message={message} onClose={() => setPopupModal(false)} duration={3000} />}
+
     </div>
   )
 }

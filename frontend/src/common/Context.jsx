@@ -10,6 +10,7 @@ const ContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(false)
     const [chooseDoctor, setChooseDoctor] = useState('')
     const [doctorProfileData, setDoctorProfileData] = useState()
+    const [popupModal, setPopupModal] = useState(false)
     const fetchProtected = async () => {
         const token = localStorage.getItem("token")
         if (token) {
@@ -31,7 +32,7 @@ const ContextProvider = ({ children }) => {
     }, [apiUrl]);
 
     return (
-        <Context.Provider value={{ doctorProfileData, setDoctorProfileData, doctorsData, setDoctorsData, loading, setLoading, chooseDoctor, setChooseDoctor, currentUser, setCurrentUser, signinButton, setSigninButton }}>
+        <Context.Provider value={{ popupModal, setPopupModal, doctorProfileData, setDoctorProfileData, doctorsData, setDoctorsData, loading, setLoading, chooseDoctor, setChooseDoctor, currentUser, setCurrentUser, signinButton, setSigninButton }}>
             {children}
         </Context.Provider>
     )
